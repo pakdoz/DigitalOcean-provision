@@ -11,7 +11,7 @@
 # 
 
 # The user must be the same set by the Cloud-init script
-nixusr="leopold"
+nixusr="pakdoz"
 
 # We go in to the user's home folder and copy the authorized keys from root
 cd /home/$nixusr/
@@ -47,31 +47,14 @@ cd flyimg
 echo "...cloned! content is:"
 ls -la
 
-# if we have the whitelist_domains.txt add the domains and activate the restriction
-if [ -r /var/whitelist_domains.txt ]; then
-    mv /var/whitelist_domains.txt whitelist_domains.txt
-    chown -R $nixusr:$nixusr whitelist_domains.txt
-    echo 'activating domain restriction'
-    # activate the restricted domains config
-    sudo -u $nixusr sed -i -e 's/restricted_domains: false/restricted_domains: true/' config/parameters.yml
-    # remove the dummy domains
-    sudo -u $nixusr sed -i -e '/www.domain-/d' config/parameters.yml
-    # prepend yaml list format to the whitelist_domains.txt
-    sudo -u $nixusr sed -i -e 's/^/    - /' whitelist_domains.txt
-    echo 'setting whitelisted domains'
-    cat whitelist_domains.txt
-    # insert the domains into the config file
-    sudo -u $nixusr sed -i '/whitelist_domains:/ r whitelist_domains.txt' config/parameters.yml
-fi
-
 # Build the docker container
 echo "sudo -u $nixusr docker build -t flyimg ."
 sudo -u $nixusr docker build -t flyimg .
 sleep 5
 
 # Run the container, naming it "flyimg" and exposing it through port 80
-echo "sudo -u $nixusr docker run -t -d -i -p 80:80 -v /home/$nixusr/flyimg:/var/www/html --name flyimg flyimg"
-sudo -u $nixusr docker run -t -d -i -p 80:80 -v /home/$nixusr/flyimg:/var/www/html --name flyimg flyimg
+echo "sudo -u $nixusr docker run -t -d -i -p 8080:80 -v /home/$nixusr/flyimg:/var/www/html --name flyimg flyimg"
+sudo -u $nixusr docker run -t -d -i -p 8080:80 -v /home/$nixusr/flyimg:/var/www/html --name flyimg flyimg
 sleep 5
 
 # Update the container to restart always in case of stopping for any reason.
