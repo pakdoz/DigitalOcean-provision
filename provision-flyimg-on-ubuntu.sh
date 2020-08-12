@@ -40,7 +40,7 @@ sudo usermod -aG docker $nixusr
 
 # We clone the flyimg repo into the user's folder.
 echo "cloning flyimg into " $(pwd)
-sudo -HEu $nixusr git clone https://github.com/flyimg/flyimg.git /home/$nixusr/flyimg
+sudo -HEu $nixusr git clone https://github.com/flyimg/flyimg.git /home/$nixusr/zippng
 
 # List the repo's content to comfirm it's there.
 cd flyimg
@@ -54,13 +54,13 @@ sleep 5
 
 # Run the container, naming it "flyimg" and exposing it through port 80
 echo "sudo -u $nixusr docker run -t -d -i -p 8080:80 -v /home/$nixusr/flyimg:/var/www/html --name flyimg flyimg"
-sudo -u $nixusr docker run -t -d -i -p 8080:80 -v /home/$nixusr/flyimg:/var/www/html --name flyimg flyimg
+sudo -u $nixusr docker run -t -d -i -p 8080:80 -v /home/$nixusr/zippng:/var/www/html --name flyimg zippng
 sleep 5
 
 # Update the container to restart always in case of stopping for any reason.
 # Even after the server has restarted
 echo "sudo -u $nixusr docker update --restart=always flyimg"
-sudo -u $nixusr docker update --restart=always flyimg
+sudo -u $nixusr docker update --restart=always zippng
 
 # list the container(s)
 echo "sudo -u $nixusr docker ps"
@@ -69,6 +69,6 @@ sleep 10
 
 # Run composer inside the container image to download all the dependencies the application needs.
 echo "sudo -HEu $nixusr docker exec -i flyimg composer install"
-sudo -HEu $nixusr docker exec -i flyimg composer install
+sudo -HEu $nixusr docker exec -i zippng composer install
 
 echo $'\n Horray! Provisioning finished \n Happy Imaging.'
