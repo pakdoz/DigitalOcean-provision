@@ -13,8 +13,8 @@
 # The user must be the same set by the Cloud-init script
 nixusr="pakdoz"
 
-sudo apt install docker.io git apt-utils -y
-sudo usermod -aG docker pakdoz
+#sudo apt install docker.io git apt-utils -y
+#sudo usermod -aG docker pakdoz
 
 # We clone the flyimg repo into the user's folder.
 echo "cloning flyimg into " $(pwd)
@@ -31,13 +31,13 @@ sudo -u $nixusr docker build -t flyimg .
 sleep 5
 
 # Run the container, naming it "flyimg" and exposing it through port 80
-echo "sudo -u $nixusr docker run -t -d -i -p 8080:80 -v /home/$nixusr/flyimg:/var/www/html --name flyimg flyimg"
+echo "sudo -u $nixusr docker run -t -d -i -p 8080:80 -v /home/$nixusr/flyimg:/var/www/html --name serverboy flyimg"
 sudo -u $nixusr docker run -t -d -i -p 8080:80 -v /home/$nixusr/serverboy:/var/www/html --name serverboy flyimg
 sleep 5
 
 # Update the container to restart always in case of stopping for any reason.
 # Even after the server has restarted
-echo "sudo -u $nixusr docker update --restart=always flyimg"
+echo "sudo -u $nixusr docker update --restart=always serverboy"
 sudo -u $nixusr docker update --restart=always serverboy
 
 # list the container(s)
@@ -48,5 +48,18 @@ sleep 10
 # Run composer inside the container image to download all the dependencies the application needs.
 echo "sudo -HEu $nixusr docker exec -i flyimg composer install"
 sudo -HEu $nixusr docker exec -i serverboy composer install
+sleep 5
+
+sudo -u $nixusr mkdir /home/$nixusr/serverboy/web/uploads
+sudo -u $nixusr mkdir /home/$nixusr/serverboy/var
+sudo -u $nixusr mkdir /home/$nixusr/serverboy/var/tmp
+sleep 5
+
+sudo -u $nixusr chown -R $nixusr:www-data /home/$nixusr/serverboy/web/uploads
+sudo -u $nixusr chown -R $nixusr:www-data /home/$nixusr/serverboy/var
+sleep 5
+
+sudo -u $nixusr rm /home/$nixusr/serverboy/src/Core/Views/Default/index.php
+sudo -u $nixusr touch /home/$nixusr/serverboy/src/Core/Views/Default/index.php
 
 echo $'\n Horray! Provisioning finished \n Happy Imaging.'
