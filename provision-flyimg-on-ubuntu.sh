@@ -55,8 +55,8 @@ sudo -u $nixusr mkdir /home/$nixusr/serverboy/var
 sudo -u $nixusr mkdir /home/$nixusr/serverboy/var/tmp
 sleep 5
 
-sudo -u $nixusr chown -R $nixusr:www-data /home/$nixusr/serverboy/web/uploads
-sudo -u $nixusr chown -R $nixusr:www-data /home/$nixusr/serverboy/var
+sudo chown -R pakdoz:www-data /home/$nixusr/serverboy/web/uploads
+sudo chown -R pakdoz:www-data /home/$nixusr/serverboy/var
 sleep 5
 
 sudo -u $nixusr rm /home/$nixusr/serverboy/src/Core/Views/Default/index.php
