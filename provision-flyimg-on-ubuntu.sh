@@ -11,10 +11,10 @@
 # 
 
 # The user must be the same set by the Cloud-init script
-nixusr="pakdoz"
+nixusr="ubuntu"
 
-#sudo apt install docker.io git apt-utils -y
-#sudo usermod -aG docker pakdoz
+sudo apt install docker.io git apt-utils -y
+sudo usermod -aG docker ubuntu
 
 # We clone the flyimg repo into the user's folder.
 echo "cloning flyimg into " $(pwd)
