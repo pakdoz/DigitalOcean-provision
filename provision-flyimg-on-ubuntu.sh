@@ -18,7 +18,7 @@ sudo usermod -aG docker ubuntu
 
 # We clone the flyimg repo into the user's folder.
 echo "cloning flyimg into " $(pwd)
-sudo -HEu $nixusr git clone https://github.com/flyimg/flyimg.git /home/$nixusr/serverboy
+sudo -HEu $nixusr git clone --depth 1 --branch 1.1.15 https://github.com/flyimg/flyimg.git /home/$nixusr/serverboy
 
 # List the repo's content to comfirm it's there.
 cd serverboy
@@ -55,8 +55,8 @@ sudo -u $nixusr mkdir /home/$nixusr/serverboy/var
 sudo -u $nixusr mkdir /home/$nixusr/serverboy/var/tmp
 sleep 5
 
-sudo chown -R pakdoz:www-data /home/$nixusr/serverboy/web/uploads
-sudo chown -R pakdoz:www-data /home/$nixusr/serverboy/var
+sudo chown -R ubuntu:www-data /home/$nixusr/serverboy/web/uploads
+sudo chown -R ubuntu:www-data /home/$nixusr/serverboy/var
 sleep 5
 
 sudo -u $nixusr rm /home/$nixusr/serverboy/src/Core/Views/Default/index.php
