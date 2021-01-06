@@ -27,7 +27,7 @@ ls -la
 
 # Build the docker container
 echo "sudo -u $nixusr docker build -t flyimg ."
-sudo -u $nixusr docker build -t flyimg .
+sudo -u $nixusr docker build -t flyimg/flyimg-build:1.1.6 .
 sleep 5
 
 # Run the container, naming it "flyimg" and exposing it through port 80
