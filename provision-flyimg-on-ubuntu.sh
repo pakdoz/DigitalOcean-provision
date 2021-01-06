@@ -13,12 +13,12 @@
 # The user must be the same set by the Cloud-init script
 nixusr="ubuntu"
 
-sudo apt install docker.io git apt-utils -y
-sudo usermod -aG docker ubuntu
+#sudo apt install docker.io git apt-utils -y
+#sudo usermod -aG docker ubuntu
 
 # We clone the flyimg repo into the user's folder.
 echo "cloning flyimg into " $(pwd)
-sudo -HEu $nixusr git clone --depth 1 --branch 1.1.15 https://github.com/flyimg/flyimg.git /home/$nixusr/serverboy
+sudo -HEu $nixusr git clone https://github.com/flyimg/flyimg.git /home/$nixusr/serverboy
 
 # List the repo's content to comfirm it's there.
 cd serverboy
@@ -27,7 +27,7 @@ ls -la
 
 # Build the docker container
 echo "sudo -u $nixusr docker build -t flyimg ."
-sudo -u $nixusr docker build -t flyimg/flyimg-build:1.1.6 .
+sudo -u $nixusr docker build -t flyimg .
 sleep 5
 
 # Run the container, naming it "flyimg" and exposing it through port 80
