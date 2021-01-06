@@ -31,8 +31,8 @@ sudo -u $nixusr docker build -t flyimg .
 sleep 5
 
 # Run the container, naming it "flyimg" and exposing it through port 80
-echo "sudo -u $nixusr docker run -t -d -i -p 8080:80 -v /home/$nixusr/flyimg:/var/www/html --name serverboy flyimg"
-sudo -u $nixusr docker run -t -d -i -p 8080:80 -v /home/$nixusr/serverboy:/var/www/html --name serverboy flyimg
+echo "sudo -u $nixusr docker run -t -d -i -p 80:80 -v /home/$nixusr/flyimg:/var/www/html --name serverboy flyimg"
+sudo -u $nixusr docker run -t -d -i -p 80:80 -v /home/$nixusr/serverboy:/var/www/html --name serverboy flyimg
 sleep 5
 
 # Update the container to restart always in case of stopping for any reason.
@@ -59,7 +59,7 @@ sudo chown -R ubuntu:www-data /home/$nixusr/serverboy/web/uploads
 sudo chown -R ubuntu:www-data /home/$nixusr/serverboy/var
 sleep 5
 
-sudo -u $nixusr rm /home/$nixusr/serverboy/src/Core/Views/Default/index.php
-sudo -u $nixusr touch /home/$nixusr/serverboy/src/Core/Views/Default/index.php
+sudo -u $nixusr rm /home/$nixusr/serverboy/src/Core/Views/Default/index.html
+sudo -u $nixusr touch /home/$nixusr/serverboy/src/Core/Views/Default/index.html
 
 echo $'\n Horray! Provisioning finished \n Happy Imaging.'
