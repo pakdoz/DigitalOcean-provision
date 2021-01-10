@@ -34,7 +34,8 @@ sleep 5
 
 # Run the container, naming it "flyimg" and exposing it through port 80
 echo "sudo -u $nixusr docker run -t -d -i -p 80:80 -v /home/$nixusr/flyimg:/var/www/html --name serverboy flyimg"
-sudo -u $nixusr docker run -t -d -i -p 80:80 -v /home/$nixusr/serverboy:/var/www/html --name serverboy flyimg
+#sudo -u $nixusr docker run -t -d -i -p 80:80 -v /home/$nixusr/serverboy:/var/www/html --name serverboy flyimg
+sudo -u ec2-user docker run -t -d -i -p 80:80 -v /home/ec2-user/serverboy:/var/www/html --name serverboy flyimg/flyimg-build:1.1.5
 sleep 5
 
 # Update the container to restart always in case of stopping for any reason.
@@ -57,9 +58,9 @@ sudo -u $nixusr mkdir /home/$nixusr/serverboy/var
 sudo -u $nixusr mkdir /home/$nixusr/serverboy/var/tmp
 sleep 5
 
-sudo chown -R ubuntu:www-data /home/$nixusr/serverboy/web/uploads
-sudo chown -R ubuntu:www-data /home/$nixusr/serverboy/var
-sleep 5
+#sudo chown -R ubuntu:www-data /home/$nixusr/serverboy/web/uploads
+#sudo chown -R ubuntu:www-data /home/$nixusr/serverboy/var
+#sleep 5
 
 sudo -u $nixusr rm /home/$nixusr/serverboy/src/Core/Views/Default/index.html
 sudo -u $nixusr touch /home/$nixusr/serverboy/src/Core/Views/Default/index.html
