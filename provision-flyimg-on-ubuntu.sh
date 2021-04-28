@@ -13,13 +13,19 @@
 # The user must be the same set by the Cloud-init script
 nixusr="ubuntu"
 
+#Centos
+#curl -fsSL https://get.docker.com/ | sh
+#sudo systemctl start docker
+#sudo systemctl status docker
+#sudo systemctl enable docker
+#Ubuntu
 #sudo apt install docker.io git apt-utils -y
 #sudo usermod -aG docker ubuntu
 
 # We clone the flyimg repo into the user's folder.
 echo "cloning flyimg into " $(pwd)
-#sudo -HEu $nixusr git clone https://github.com/flyimg/flyimg.git /home/$nixusr/serverboy
-sudo -HEu $nixusr git clone --depth 1 --branch 1.1.15 https://github.com/flyimg/flyimg.git /home/$nixusr/serverboy
+sudo -HEu $nixusr git clone https://github.com/flyimg/flyimg.git /home/$nixusr/serverboy
+#sudo -HEu $nixusr git clone --depth 1 --branch 1.1.15 https://github.com/flyimg/flyimg.git /home/$nixusr/serverboy
 
 # List the repo's content to comfirm it's there.
 cd serverboy
@@ -28,14 +34,15 @@ ls -la
 
 # Build the docker container
 echo "sudo -u $nixusr docker build -t flyimg ."
-sudo -u $nixusr docker build -t flyimg/flyimg-build:1.1.5 .
-#sudo -u $nixusr docker build -t flyimg .
+#sudo -u $nixusr docker build -t flyimg/flyimg-build:1.1.5 .
+sudo -u $nixusr docker build -t flyimg .
 sleep 5
 
 # Run the container, naming it "flyimg" and exposing it through port 80
 echo "sudo -u $nixusr docker run -t -d -i -p 80:80 -v /home/$nixusr/flyimg:/var/www/html --name serverboy flyimg"
 #sudo -u $nixusr docker run -t -d -i -p 80:80 -v /home/$nixusr/serverboy:/var/www/html --name serverboy flyimg
-sudo -u ec2-user docker run -t -d -i -p 80:80 -v /home/ec2-user/serverboy:/var/www/html --name serverboy flyimg/flyimg-build:1.1.5
+sudo -u $nixusr docker run -t -d -i -p 80:8080 -v /home/$nixusr/serverboy:/var/www/html --name serverboy flyimg
+#sudo -u ec2-user docker run -t -d -i -p 80:80 -v /home/ec2-user/serverboy:/var/www/html --name serverboy flyimg/flyimg-build:1.1.5
 sleep 5
 
 # Update the container to restart always in case of stopping for any reason.
