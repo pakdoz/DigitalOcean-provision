@@ -73,3 +73,21 @@ sudo -u $nixusr rm /home/$nixusr/serverboy/src/Core/Views/Default/index.html
 sudo -u $nixusr touch /home/$nixusr/serverboy/src/Core/Views/Default/index.html
 
 echo $'\n Horray! Provisioning finished \n Happy Imaging.'
+
+echo "Install Caddy"
+sudo yum install yum-plugin-copr -y
+sudo yum copr enable @caddy/caddy -y
+sudo yum install caddy -y
+
+echo "Install Caddy Selesai"
+sleep 5
+
+sudo mkdir /etc/caddy/ssl
+cd /etc/caddy/ssl/
+sudo wget https://www.tataweb.net/ssl/ssl.tar.gz
+sudo tar zxvf ssl.tar.gz
+sudo rm ssl.tar.gz
+cd ~
+sudo mv /etc/caddy/Caddyfile /etc/caddy/Caddyfile.old
+sleep 5
+echo "Setup Caddy Selesai"
